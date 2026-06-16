@@ -241,6 +241,76 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "No API key was provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "No API key was provided. Provide the API key in the Authorization header as 'Bearer YOUR_API_KEY'."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key provided is not valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "The API key provided is not valid."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Too many requests in short succession."
+                    },
+                    "waitSeconds": {
+                      "type": "integer",
+                      "minimum": 3,
+                      "maximum": 180,
+                      "example": 30,
+                      "description": "Seconds before retrying."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -308,6 +378,76 @@
                       "type": "string",
                       "example": "KJ12ML",
                       "description": "The join code to join the private server directly."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No API key was provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "No API key was provided. Provide the API key in the Authorization header as 'Bearer YOUR_API_KEY'."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key provided is not valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "The API key provided is not valid."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Too many requests in short succession."
+                    },
+                    "waitSeconds": {
+                      "type": "integer",
+                      "minimum": 3,
+                      "maximum": 180,
+                      "example": 30,
+                      "description": "Seconds before retrying."
                     }
                   }
                 }
@@ -404,6 +544,191 @@
                           }
                         }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No API key was provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "No API key was provided. Provide the API key in the Authorization header as 'Bearer YOUR_API_KEY'."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key provided is not valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "The API key provided is not valid."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Too many requests in short succession."
+                    },
+                    "waitSeconds": {
+                      "type": "integer",
+                      "minimum": 3,
+                      "maximum": 180,
+                      "example": 30,
+                      "description": "Seconds before retrying."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/command": {
+      "post": {
+        "summary": "Execute Remote Command",
+        "description": "Executes a command remotely into the private server.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "payload": {
+                    "type": ["string", "array"],
+                    "example": [
+                      ":pm kablankooo You will be respawned for using a banned vehicle.",
+                      ":respawn kablankooo"
+                    ],
+                    "description": "The command to execute. Same format as in game. Eg. :kill kablankooo. This can also be an array of commands to execute. Order of array matters for order of execution."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Whether the request was successful."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No API key was provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "No API key was provided. Provide the API key in the Authorization header as 'Bearer YOUR_API_KEY'."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key provided is not valid or this IP is not whitelisted for sending requests to the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "The API key provided is not valid or this IP is not allowed to send requests to the server."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Too many requests in short succession."
+                    },
+                    "waitSeconds": {
+                      "type": "integer",
+                      "minimum": 3,
+                      "maximum": 180,
+                      "example": 30,
+                      "description": "Seconds before retrying."
                     }
                   }
                 }
