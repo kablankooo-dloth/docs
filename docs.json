@@ -40,9 +40,7 @@
       },
       {
         "tab": "API Reference",
-        "pages": [
-          "test"
-        ]
+        "openapi": "openapi.json"
       },
       {
         "tab": "Public Services",
