@@ -95,5 +95,10 @@
   },
   "fonts": {
     "family": "Montserrat"
+  },
+  "errors": {
+    "404": {
+      "redirect": true
+    }
   }
 }
