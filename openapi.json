@@ -11,7 +11,7 @@
 
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://privateapi.domain.com"
     }
   ],
 
@@ -22,37 +22,386 @@
   ],
 
   "paths": {
-    "/plants": {
+    "/v1/live": {
       "get": {
-        "summary": "Get all plants",
-        "description": "Returns all plants from the system",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "summary": "Full Server Information",
+        "description": "Responds with live data from the server, excluding server logs.",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful Request",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "plants": {
+                    "server": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "The display name of the private server.",
+                          "example": "kablankooo's New Private Server"
+                        },
+                        "serverStarted": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "ISO string containing the time when the server was started."
+                        },
+                        "playersCurrent": {
+                          "type": "integer",
+                          "description": "How many players are in the server.",
+                          "example": 26
+                        },
+                        "playersMax": {
+                          "type": "integer",
+                          "description": "The maximum amount of players that are allowed to be in the server at one time.",
+                          "example": 45
+                        },
+                        "playersQueue": {
+                          "type": "integer",
+                          "description": "The amount of players in the queue waiting to be transferred into the server.",
+                          "example": 1
+                        },
+                        "owner": {
+                          "type": "integer",
+                          "description": "Roblox ID of the player who owns the server.",
+                          "example": 7294908996
+                        },
+                        "co-owners": {
+                          "type": "array",
+                          "description": "An array of Roblox IDs for users who have co-owner permissions.",
+                          "example": [722707613]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Starting",
+                            "Running",
+                            "ShuttingDown",
+                            "Offline"
+                          ],
+                          "example": "Running",
+                          "description": "The status of the server."
+                        },
+                        "joinKey": {
+                          "type": "string",
+                          "example": "KJ12ML",
+                          "description": "The join code to join the private server directly."
+                        }
+                      }
+                    },
+                    "players": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "id": { "type": "string" },
-                          "name": { "type": "string" },
-                          "price": { "type": "number" }
+                          "id": {
+                            "type": "integer",
+                            "example": 7294908996,
+                            "description": "Roblox ID of the player."
+                          },
+                          "username": {
+                            "type": "string",
+                            "example": "kablankooo",
+                            "description": "Username of the player."
+                          },
+                          "display": {
+                            "type": "string",
+                            "example": "Patryk",
+                            "description": "Roblox display name of the player."
+                          },
+                          "health": {
+                            "type": "number",
+                            "example": 0,
+                            "description": "How much health the player is on."
+                          },
+                          "team": {
+                            "type": "string",
+                            "enum": [
+                              "Police",
+                              "Fire",
+                              "DOT",
+                              "Civilian",
+                              "Criminal",
+                              "Prisoner"
+                            ],
+                            "example": "Civilian",
+                            "description": "The main team the user is a part of."
+                          },
+                          "callsign": {
+                            "type": ["string", "null"],
+                            "example": null,
+                            "description": "The callsign of the player. Will be null if player is on a team without a callsign."
+                          },
+                          "permission": {
+                            "type": "string",
+                            "enum": [
+                              "Normal",
+                              "Moderator",
+                              "Administrator",
+                              "Co-Owner",
+                              "Owner"
+                            ],
+                            "example": "Moderator"
+                          },
+                          "wantedStars": {
+                            "type": "integer",
+                            "example": 0,
+                            "description": "Amount of wanted stars the user has."
+                          },
+                          "location": {
+                            "type": "object",
+                            "description": "The location of where the player is in the world.",
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "example": 50.131
+                              },
+                              "y": {
+                                "type": "number",
+                                "example": 25
+                              },
+                              "z": {
+                                "type": "number",
+                                "example": 231.412
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "vehicles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the vehicle.",
+                            "example": "Chevelle Corvet"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "description": "Roblox username of the vehicle owner.",
+                            "example": "EmesOfficial"
+                          },
+                          "hasKeys": {
+                            "type": "string",
+                            "description": "Roblox username of the user with the vehicle's keys.",
+                            "example": "kablankooo"
+                          },
+                          "color": {
+                            "type": "string",
+                            "example": "#FFFFFF",
+                            "description": "The HEX color value of the vehicle."
+                          },
+                          "location": {
+                            "type": "object",
+                            "description": "The location of the vehicle.",
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "example": -61.091
+                              },
+                              "y": {
+                                "type": "number",
+                                "example": 52
+                              },
+                              "z": {
+                                "type": "number",
+                                "example": 12.128
+                              }
+                            }
+                          },
+                          "speed": {
+                            "type": "number",
+                            "description": "The speed in MPH of the vehicle.",
+                            "example": 23
+                          },
+                          "passengers": {
+                            "type": "array",
+                            "description": "An array of usernames of players who are in passenger seats.",
+                            "example": ["EmesOfficial"]
+                          },
+                          "plate": {
+                            "type": "string",
+                            "description": "License plate of the vehicle.",
+                            "example": "EMES"
+                          },
+                          "fuel": {
+                            "type": "integer",
+                            "description": "A number indicating percentage of fuel amount in tank (eg. 43 represents 43% full).",
+                            "example": 96
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/server": {
+      "get": {
+        "summary": "Server Information",
+        "description": "Responds with basic server information.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "The display name of the private server.",
+                      "example": "kablankooo's New Private Server"
+                    },
+                    "serverStarted": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "ISO string containing the time when the server was started."
+                    },
+                    "playersCurrent": {
+                      "type": "integer",
+                      "description": "How many players are in the server.",
+                      "example": 26
+                    },
+                    "playersMax": {
+                      "type": "integer",
+                      "description": "The maximum amount of players that are allowed to be in the server at one time.",
+                      "example": 45
+                    },
+                    "playersQueue": {
+                      "type": "integer",
+                      "description": "The amount of players in the queue waiting to be transferred into the server.",
+                      "example": 1
+                    },
+                    "owner": {
+                      "type": "integer",
+                      "description": "Roblox ID of the player who owns the server.",
+                      "example": 7294908996
+                    },
+                    "co-owners": {
+                      "type": "array",
+                      "description": "An array of Roblox IDs for users who have co-owner permissions.",
+                      "example": [722707613]
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "Starting",
+                        "Running",
+                        "ShuttingDown",
+                        "Offline"
+                      ],
+                      "example": "Running",
+                      "description": "The status of the server."
+                    },
+                    "joinKey": {
+                      "type": "string",
+                      "example": "KJ12ML",
+                      "description": "The join code to join the private server directly."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/players": {
+      "get": {
+        "summary": "Player Information",
+        "description": "Information about players in the server.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 7294908996,
+                        "description": "Roblox ID of the player."
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "kablankooo",
+                        "description": "Username of the player."
+                      },
+                      "display": {
+                        "type": "string",
+                        "example": "Patryk",
+                        "description": "Roblox display name of the player."
+                      },
+                      "health": {
+                        "type": "number",
+                        "example": 0,
+                        "description": "How much health the player is on."
+                      },
+                      "team": {
+                        "type": "string",
+                        "enum": [
+                          "Police",
+                          "Fire",
+                          "DOT",
+                          "Civilian",
+                          "Criminal",
+                          "Prisoner"
+                        ],
+                        "example": "Civilian",
+                        "description": "The main team the user is a part of."
+                      },
+                      "callsign": {
+                        "type": ["string", "null"],
+                        "example": null,
+                        "description": "The callsign of the player. Will be null if player is on a team without a callsign."
+                      },
+                      "permission": {
+                        "type": "string",
+                        "enum": [
+                          "Normal",
+                          "Moderator",
+                          "Administrator",
+                          "Co-Owner",
+                          "Owner"
+                        ],
+                        "example": "Moderator"
+                      },
+                      "wantedStars": {
+                        "type": "integer",
+                        "example": 0,
+                        "description": "Amount of wanted stars the user has."
+                      },
+                      "location": {
+                        "type": "object",
+                        "description": "The location of where the player is in the world.",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "example": 50.131
+                          },
+                          "y": {
+                            "type": "number",
+                            "example": 25
+                          },
+                          "z": {
+                            "type": "number",
+                            "example": 231.412
+                          }
                         }
                       }
                     }
@@ -70,7 +419,9 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "bearerFormat": "APIKEY",
+        "description": "Bearer token used to authenticate requests. This is the API key of the private server."
       }
     }
   }
