@@ -39,18 +39,7 @@
         ]
       },
       {
-        "tab": "API Reference",
-        "dropdowns": [
-          {
-            "dropdown": "API Reference",
-            "pages": [
-              "helllo"
-            ]
-          },
-          {
-            "dropdown": "Authorized Services"
-          }
-        ]
+        "tab": "API Reference"
       },
       {
         "tab": "Public Services",
