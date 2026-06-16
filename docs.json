@@ -39,7 +39,10 @@
         ]
       },
       {
-        "tab": "API Reference"
+        "tab": "API Reference",
+        "pages": [
+          "test"
+        ]
       },
       {
         "tab": "Public Services",
