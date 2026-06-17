@@ -623,7 +623,156 @@
         }
       }
     },
-    "/v1/command": {
+    "/v1/vehicles": {
+      "get": {
+        "summary": "Vehicle Data",
+        "description": "Responds with vehicle information and metadata.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the vehicle.",
+                      "example": "Chevelle Corvet"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "Roblox username of the vehicle owner.",
+                      "example": "EmesOfficial"
+                    },
+                    "hasKeys": {
+                      "type": "string",
+                      "description": "Roblox username of the user with the vehicle's keys.",
+                      "example": "kablankooo"
+                    },
+                    "color": {
+                      "type": "string",
+                      "example": "#FFFFFF",
+                      "description": "The HEX color value of the vehicle."
+                    },
+                    "location": {
+                      "type": "object",
+                      "description": "The location of the vehicle.",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "example": -61.091
+                        },
+                        "y": {
+                          "type": "number",
+                          "example": 52
+                        },
+                        "z": {
+                          "type": "number",
+                          "example": 12.128
+                        }
+                      }
+                    },
+                    "speed": {
+                      "type": "number",
+                      "description": "The speed in MPH of the vehicle.",
+                      "example": 23
+                    },
+                    "passengers": {
+                      "type": "array",
+                      "description": "An array of usernames of players who are in passenger seats.",
+                      "example": ["EmesOfficial"]
+                    },
+                    "plate": {
+                      "type": "string",
+                      "description": "License plate of the vehicle.",
+                      "example": "EMES"
+                    },
+                    "fuel": {
+                      "type": "integer",
+                      "description": "A number indicating percentage of fuel amount in tank (eg. 43 represents 43% full).",
+                      "example": 96
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No API key was provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "No API key was provided. Provide the API key in the Authorization header as 'Bearer YOUR_API_KEY'."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key provided is not valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "default": "The API key provided is not valid."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false,
+                      "description": "Whether the request was successful."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Too many requests in short succession."
+                    },
+                    "waitSeconds": {
+                      "type": "integer",
+                      "minimum": 3,
+                      "maximum": 180,
+                      "example": 30,
+                      "description": "Seconds before retrying."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/create/command": {
       "post": {
         "summary": "Execute Remote Command",
         "description": "Executes a command remotely into the private server.",
@@ -648,7 +797,14 @@
                         "type": "array",
                         "maxItems": 5,
                         "minItems": 1,
-                        "example": [":kill kablankooo", ":pm kablankooo you have been killed."]
+                        "items": {
+                          "minItems": 1,
+                          "type": "string"
+                        },
+                        "example": [
+                          ":kill kablankooo",
+                          ":pm kablankooo you have been killed."
+                        ]
                       }
                     ]
                   }
