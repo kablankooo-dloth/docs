@@ -637,10 +637,10 @@
                   "payload": {
                     "oneOf": [
                       {
-                      title: "Single Command",
-                      description: "Send one command to the private server.",
-                      type: "string",
-                      example: ":kill kablankooo"
+                        "title": "Single Command",
+                        "description": "Send one command to the private server.",
+                        "type": "string",
+                        "example": ":kill kablankooo"
                       },
                       {
                         "title": "Multiple Commands",
