@@ -635,12 +635,22 @@
                 "type": "object",
                 "properties": {
                   "payload": {
-                    "type": ["string", "array"],
-                    "example": [
-                      ":pm kablankooo You will be respawned for using a banned vehicle.",
-                      ":respawn kablankooo"
-                    ],
-                    "description": "The command to execute. Same format as in game. Eg. :kill kablankooo. This can also be an array of commands to execute. Order of array matters for order of execution."
+                    "oneOf": [
+                      {
+                      title: "Single Command",
+                      description: "Send one command to the private server.",
+                      type: "string",
+                      example: ":kill kablankooo"
+                      },
+                      {
+                        "title": "Multiple Commands",
+                        "description": "Send multiple commands in one request.",
+                        "type": "array",
+                        "maxItems": 5,
+                        "minItems": 1,
+                        "example": [":kill kablankooo", ":pm kablankooo you have been killed."]
+                      }
+                    ]
                   }
                 }
               }
